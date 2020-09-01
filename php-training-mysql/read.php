@@ -11,30 +11,12 @@
       <!-- Afficher la liste des randonnées -->
 
 <?php
-// DSN Variables
-require 'external.php';
-$host = "localhost";
-$username = $user;
-$password = $pass;
-$dbname = "becode";
 
-// Set DSN
-$dsn = "mysql:host=". $host. ";dbname=". $dbname;
-
-// Create PDO instance
-try
-{
-  $pdo = new PDO($dsn, $username, $password);
-} catch (PDOException $e) {
-  print "Error!: " . $e->getMessage() . "<br/>";
-  die();
-}
-
-$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+include 'connect.php';
 
 // READ Data
 $sql = 'SELECT * FROM hiking';
-$stmt = $pdo->query($sql);
+$stmt = $pdo->prepare($sql);
 $stmt->execute();
 $rows = $stmt->fetchAll();
 
@@ -42,11 +24,13 @@ foreach($rows as $row)
 {
   echo
   "<tr>" .
-  "<td>" . $row->name . "</td>" .
-  "<td>" . $row->difficulty . "</td>" .
-  "<td>" . $row->distance . "</td>" .
-  "<td>" . $row->duration . "</td>" .
-  "<td>" . $row->height_difference . "</td>" .
+    "<td><a href='./update.php?id=" . $row->id . "'>" . $row->name . "</a></td>" .
+    "<td>" . $row->difficulty . "</td>" .
+    "<td>" . $row->distance . "</td>" .
+    "<td>" . $row->duration . "</td>" .
+    "<td>" . $row->height_difference . "</td>" .
+    "<td>" . $row->available . "</td>" .
+    "<td><a href='./delete.php?id=" . $row->id . "'><button type='button'>Delete</button></a></td>" .
   "</tr>";
 }
 

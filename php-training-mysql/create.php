@@ -1,46 +1,42 @@
 <?php
-// DSN Variables
-require 'external.php';
-$host = "localhost";
-$username = $user;
-$password = $pass;
-$dbname = "becode";
-
-// Set DSN
-$dsn = "mysql:host=". $host. ";dbname=". $dbname;
-
-// Create PDO instance
-try
-{
-  $pdo = new PDO($dsn, $username, $password);
-} catch (PDOException $e) {
-  print "Error!: " . $e->getMessage() . "<br/>";
-  die();
-}
-
-$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+include 'connect.php';
 
 // DATA Handling
-$name = $difficulty = $distance = $height_difference = "";
-$duration = 0;
+$name = $difficulty = $distance = $duration = $height_difference = $available = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   $name = test_input($_POST["name"]);
+  $name = filter_var($name, FILTER_SANITIZE_STRING);
+
   $difficulty = test_input($_POST["difficulty"]);
+  $difficulty = filter_var($difficulty, FILTER_SANITIZE_STRING);
+
   $distance = test_input($_POST["distance"]);
-  $duration = test_input($_POST["time"]);
+  $distance = filter_var($distance, FILTER_SANITIZE_NUMBER_INT);
+
+  $duration = test_input($_POST["duration"]);
+  $duration = filter_var($duration, FILTER_SANITIZE_NUMBER_INT);
+
   $height_difference = test_input($_POST["height_difference"]);
+  $height_difference = filter_var($height_difference, FILTER_SANITIZE_NUMBER_INT);
+
+  $available = test_input($_POST["available"]);
+  $available = filter_var($available, FILTER_SANITIZE_STRING);
 
   // INSERT Data
   if ($name != "")
   {
-    $sql = 'INSERT INTO hiking(name, difficulty, distance, duration, height_difference) VALUES(?, ?, ?, ?, ?)';
+    $sql = '
+	INSERT INTO
+		hiking(name, difficulty, distance, duration, height_difference, available)
+	VALUES(?, ?, ?, ?, ?, ?)
+	';
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$name, $difficulty, $distance, $duration, $height_difference]);
+    $stmt->execute([$name, $difficulty, $distance, $duration, $height_difference, $available]);
     $stmt->closeCursor();
   }
-  echo 'La randonnée a été ajoutée avec succès.';
+  $message = 'La randonnée a été ajoutée avec succès.';
 }
 
 // INPUT Validation
@@ -91,7 +87,17 @@ function test_input($data) {
 			<label for="height_difference">Dénivelé</label>
 			<input type="text" name="height_difference" value="">
 		</div>
+		<div>
+			<label for="available">Praticable</label>
+			<select name="available">
+				<option value="1">Oui</option>
+				<option value="0">Non</option>
+			</select>
+		</div>
 		<button type="submit" name="button">Envoyer</button>
 	</form>
+	<div>
+		<p><?php echo $message ?></p>
+	</div>
 </body>
 </html>
