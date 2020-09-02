@@ -31,8 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   if ($name != "")
   {
     $sql = '
-	INSERT INTO
-		hiking(name, difficulty, distance, duration, height_difference, available)
+	INSERT INTO hiking(name, difficulty, distance, duration, height_difference, available)
 	VALUES(?, ?, ?, ?, ?, ?)
 	';
     $stmt = $pdo->prepare($sql);
@@ -84,7 +83,7 @@ function test_input($data) {
 		</div>
 		<div>
 			<label for="duration">Durée</label>
-			<input type="time" name="duration" value="">
+			<input type="time" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" name="duration" value="">
 		</div>
 		<div>
 			<label for="height_difference">Dénivelé</label>

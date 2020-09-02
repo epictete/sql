@@ -25,6 +25,7 @@ $sql = 'SELECT * FROM hiking';
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $rows = $stmt->fetchAll();
+$stmt->closeCursor();
 
 foreach($rows as $row)
 {
@@ -40,9 +41,11 @@ foreach($rows as $row)
   "</tr>";
 }
 
-$stmt->closeCursor();
 ?>
 
     </table>
+    <br>
+    <p><a href="./create.php">Ajouter une randonnée</a></p>
+
   </body>
 </html>

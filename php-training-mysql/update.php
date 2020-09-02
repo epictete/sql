@@ -93,7 +93,7 @@ function test_input($data) {
 		</div>
 		<div>
 			<label for="duration">Durée</label>
-			<input type="duration" name="duration" value="<?php echo $post->duration ?>">
+			<input type="time" name="duration" value="<?php echo $post->duration ?>">
 		</div>
 		<div>
 			<label for="height_difference">Dénivelé</label>

@@ -3,20 +3,17 @@
 include 'connect.php';
 
 $usr = $_POST['usr'];
-$pwd = sha1($_POST['pwd']);
+$pwd = $_POST['pwd'];
 
-$sql = 'SELECT * FROM users WHERE username=? AND password=?';
+$sql = 'SELECT * FROM users WHERE username=?';
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$usr, $pwd]);
-$valid = $stmt->fetch();
-echo $valid->username . '<br>';
-echo $usr . '<br>';
-echo $valid->password . '<br>';
-echo $pwd . '<br>';
+$stmt->execute([$usr]);
+$row = $stmt->fetch();
+$stmt->closeCursor();
 
 if (isset($usr) && isset($pwd))
 {
-    if ($valid->username == $usr && $valid->password == $pwd)
+    if ($row->username == $usr && password_verify($pwd, $row->password ))
     {
         session_start();
         $_SESSION['usr'] = $usr;
