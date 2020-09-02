@@ -6,7 +6,7 @@ require 'external.php';
 $host = "localhost";
 $username = $user;
 $password = $pass;
-$dbname = "becode";
+$dbname = "colyseum";
 
 // Set DSN
 $dsn = "mysql:host=". $host. ";dbname=". $dbname;

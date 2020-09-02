@@ -1,5 +1,8 @@
 <?php
+
 include 'connect.php';
+session_start ();
+session_check();
 
 // DATA Handling
 $name = $difficulty = $distance = $duration = $height_difference = $available = "";

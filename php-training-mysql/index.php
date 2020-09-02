@@ -10,12 +10,12 @@
 </head>
 <body>
 
-    <form action="./login.php" method="post">
-        <label for="user">Username :</label>
-        <input type="text" name="user"><br>
+    <form action="login.php" method="post">
+        <label for="usr">name :</label>
+        <input type="text" name="usr"><br>
         <label for="pwd">Password :</label>
         <input type="text" name="pwd"><br>
-        <input type="submit" value="Enter">
+        <input type="submit" value="Connexion">
     </form>
     
 </body>

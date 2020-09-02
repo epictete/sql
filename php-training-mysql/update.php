@@ -1,6 +1,8 @@
 <?php
 
 include 'connect.php';
+session_start ();
+session_check();
 
 $id = $_GET['id'];
 

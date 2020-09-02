@@ -1,3 +1,11 @@
+<?php
+
+include 'connect.php';
+session_start ();
+session_check();
+
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,8 +19,6 @@
       <!-- Afficher la liste des randonnées -->
 
 <?php
-
-include 'connect.php';
 
 // READ Data
 $sql = 'SELECT * FROM hiking';
